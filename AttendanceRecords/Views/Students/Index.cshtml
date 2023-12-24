@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<AttendanceRecords.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Студенты</h1>
+
+<p>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+    {
+        <a asp-action="Create">Добавить запись</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FIO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Group)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecordBook)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mail)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                    @Html.DisplayFor(modelItem => item.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Group.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecordBook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                    <a asp-action="Index" asp-controller="StudentSkips" asp-route-id="@item.StudentId">Посещаемость</a>
+                    <a asp-action="Details" asp-route-id="@item.StudentId">Детали</a>
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.StudentId">Редактировать</a>
+                        <a asp-action="Delete" asp-route-id="@item.StudentId">Удалить</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

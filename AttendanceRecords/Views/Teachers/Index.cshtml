@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<AttendanceRecords.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Преподаватели</h1>
+
+<p>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+    {
+        <a asp-action="Create">Добавить запись</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FIO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Job)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rank)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FIO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Job)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rank)
+            </td>
+            <td>
+                    <a asp-action="Details" asp-route-id="@item.TeacherId">Детали</a>
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.TeacherId">Редактировать</a>
+                        <a asp-action="Delete" asp-route-id="@item.TeacherId">Удалить</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,44 @@
+﻿@model AttendanceRecords.Models.Group
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Удалить</h1>
+
+<div>
+    <h4>Группы</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupJob)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupJob)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Student_Count)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Student_Count)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="GroupId" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад</a>
+    </form>
+</div>

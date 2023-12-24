@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model IEnumerable<AttendanceRecords.Models.Group>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Группы</h1>
+
+<p>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+    {
+        <a asp-action="Create">Добавить запись</a>
+    }
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupJob)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GroupYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student_Count)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupJob)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GroupYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student_Count)
+            </td>
+            <td>
+                    <a asp-action="Details" asp-route-id="@item.GroupId">Детали</a>
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.GroupId">Редактировать</a>
+                        <a asp-action="Delete" asp-route-id="@item.GroupId">Удалить</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

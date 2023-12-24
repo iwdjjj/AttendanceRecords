@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model AttendanceRecords.Models.Group
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Детали</h1>
+
+<div>
+    <h4>Группы</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupJob)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupJob)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GroupYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GroupYear)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Student_Count)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Student_Count)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RequireAdministratorRole")).Succeeded)
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.GroupId">Редактировать</a>
+    }
+    <a asp-action="Index">Назад</a>
+</div>

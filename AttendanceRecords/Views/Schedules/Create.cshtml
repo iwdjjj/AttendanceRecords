@@ -1,0 +1,46 @@
+﻿@model AttendanceRecords.Models.Schedule
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Добавить</h1>
+
+<h4>Расписание</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubjectId" class="control-label"></label>
+                <select asp-for="SubjectId" class ="form-control" asp-items="ViewBag.SubjectId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="GroupId" class="control-label"></label>
+                <select asp-for="GroupId" class ="form-control" asp-items="ViewBag.GroupId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <select asp-for="TeacherId" class ="form-control" asp-items="ViewBag.TeacherId"></select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
